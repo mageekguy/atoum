@@ -1,7 +1,7 @@
 {
-	"name": "atoum/atoum",
+	"name": "mageekguy/atoum",
 	"type": "library",
-	"description": "Simple modern and intuitive unit testing framework for PHP 5.3+",
+	"description": "The root and a fork of the simple modern and intuitive unit testing framework for PHP 5.3+",
 	"keywords": ["TDD","atoum","test","unit testing"],
 	"homepage": "http://www.atoum.org",
 	"license": "BSD",
@@ -37,9 +37,6 @@
 		"ext-session": "*",
 		"ext-tokenizer": "*",
 		"ext-xml": "*"
-	},
-	"replace": {
-		"mageekguy/atoum": "*"
 	},
 	"bin":
 	[
