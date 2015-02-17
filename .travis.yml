@@ -10,8 +10,6 @@ matrix:
   allow_failures:
     - php: hhvm
     - php: hhvm-nightly
-notifications:
-  irc: "irc.freenode.org##atoum"
 env:
     global:
         - secure: "vJ1TnFhU9muqLwkiBd13lFqdPJIrwKJ5OJjR3/jQROWQsRO4NPd/I7OfdDKk\noJGYbgjGMw7bmBYI0xjhYfZAnrClwIBvn1Qx5x5UDGxTHC8ZP6xs49AGa37I\n7BJlWC7+nRwPmmLhoLsbut/O7Kkn8IkdJIeChHbdn8RHQIJTJ4Y="
