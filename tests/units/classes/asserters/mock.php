@@ -135,6 +135,44 @@ class mock extends atoum\test
 		;
 	}
 
+	public function testHasReceivedMessages()
+	{
+		$this
+			->if($asserter = $this->newTestedInstance)
+				->then
+					->exception(function() use ($asserter) { $asserter->hasReceivedMessages(); })
+						->isInstanceOf('mageekguy\atoum\exceptions\logic')
+						->hasMessage('Mock is undefined')
+
+				->if($asserter
+						->setWith($mock = new \mock\foo($controller = new \mock\atoum\mock\controller()))
+						->setLocale($locale = new \mock\atoum\locale()),
+					$this->calling($locale)->_ = $didNotReceiveAnyMessage = uniqid(),
+					$this->calling($controller)->getCallsNumber = 0,
+					$this->calling($controller)->getMockClass = $mockClass = uniqid()
+				)
+				->then
+					->exception(function() use ($asserter) { $asserter->hasReceivedMessages(); })
+						->isInstanceOf('mageekguy\atoum\asserter\exception')
+						->hasMessage($didNotReceiveAnyMessage)
+					->mock($locale)->call('_')->withArguments('%s did not receive any message', $mockClass)->once
+
+					->exception(function() use ($asserter) { $asserter->hasReceivedMessages; })
+						->isInstanceOf('mageekguy\atoum\asserter\exception')
+						->hasMessage($didNotReceiveAnyMessage)
+					->mock($locale)->call('_')->withArguments('%s did not receive any message', $mockClass)->twice
+
+					->exception(function() use ($asserter, & $failMessage) { $asserter->hasReceivedMessages($failMessage = uniqid()); })
+						->isInstanceOf('mageekguy\atoum\asserter\exception')
+						->hasMessage($failMessage)
+
+				->if($this->calling($controller)->getCallsNumber = rand(1, PHP_INT_MAX))
+				->then
+					->object($asserter->hasReceivedMessages())->isIdenticalTo($asserter)
+					->object($asserter->hasReceivedMessages)->isIdenticalTo($asserter)
+		;
+	}
+
 	public function testWasNotCalled()
 	{
 		$this
@@ -170,6 +208,44 @@ class mock extends atoum\test
 				->then
 					->object($asserter->wasNotCalled())->isIdenticalTo($asserter)
 					->object($asserter->wasNotCalled)->isIdenticalTo($asserter)
+		;
+	}
+
+	public function testDidNotReceiveAnyMessage()
+	{
+		$this
+			->if($asserter = $this->newTestedInstance)
+				->then
+					->exception(function() use ($asserter) { $asserter->didNotReceiveAnyMessage(); })
+						->isInstanceOf('mageekguy\atoum\exceptions\logic')
+						->hasMessage('Mock is undefined')
+
+				->if($asserter
+						->setWith($mock = new \mock\foo($controller = new \mock\atoum\mock\controller()))
+						->setLocale($locale = new \mock\atoum\locale()),
+					$this->calling($locale)->_ = $hasReceivedMessage = uniqid(),
+					$this->calling($controller)->getCallsNumber = rand(1, PHP_INT_MAX),
+					$this->calling($controller)->getMockClass = $mockClass = uniqid()
+				)
+				->then
+					->exception(function() use ($asserter) { $asserter->didNotReceiveAnyMessage(); })
+						->isInstanceOf('mageekguy\atoum\asserter\exception')
+						->hasMessage($hasReceivedMessage)
+					->mock($locale)->call('_')->withArguments('%s receive some message', $mockClass)->once
+
+					->exception(function() use ($asserter) { $asserter->didNotReceiveAnyMessage; })
+						->isInstanceOf('mageekguy\atoum\asserter\exception')
+						->hasMessage($hasReceivedMessage)
+					->mock($locale)->call('_')->withArguments('%s receive some message', $mockClass)->twice
+
+					->exception(function() use ($asserter, & $failMessage) { $asserter->didNotReceiveAnyMessage($failMessage = uniqid()); })
+						->isInstanceOf('mageekguy\atoum\asserter\exception')
+						->hasMessage($failMessage)
+
+				->if($this->calling($controller)->getCallsNumber = 0)
+				->then
+					->object($asserter->didNotReceiveAnyMessage())->isIdenticalTo($asserter)
+					->object($asserter->didNotReceiveAnyMessage)->isIdenticalTo($asserter)
 		;
 	}
 
