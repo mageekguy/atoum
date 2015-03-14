@@ -135,12 +135,12 @@ class mock extends atoum\test
 		;
 	}
 
-	public function testHasReceivedMessages()
+	public function testHasReceivedSomeMessage()
 	{
 		$this
 			->if($asserter = $this->newTestedInstance)
 				->then
-					->exception(function() use ($asserter) { $asserter->hasReceivedMessages(); })
+					->exception(function() use ($asserter) { $asserter->hasReceivedSomeMessage(); })
 						->isInstanceOf('mageekguy\atoum\exceptions\logic')
 						->hasMessage('Mock is undefined')
 
@@ -152,24 +152,24 @@ class mock extends atoum\test
 					$this->calling($controller)->getMockClass = $mockClass = uniqid()
 				)
 				->then
-					->exception(function() use ($asserter) { $asserter->hasReceivedMessages(); })
+					->exception(function() use ($asserter) { $asserter->hasReceivedSomeMessage(); })
 						->isInstanceOf('mageekguy\atoum\asserter\exception')
 						->hasMessage($didNotReceiveAnyMessage)
 					->mock($locale)->call('_')->withArguments('%s did not receive any message', $mockClass)->once
 
-					->exception(function() use ($asserter) { $asserter->hasReceivedMessages; })
+					->exception(function() use ($asserter) { $asserter->hasReceivedSomeMessage; })
 						->isInstanceOf('mageekguy\atoum\asserter\exception')
 						->hasMessage($didNotReceiveAnyMessage)
 					->mock($locale)->call('_')->withArguments('%s did not receive any message', $mockClass)->twice
 
-					->exception(function() use ($asserter, & $failMessage) { $asserter->hasReceivedMessages($failMessage = uniqid()); })
+					->exception(function() use ($asserter, & $failMessage) { $asserter->hasReceivedSomeMessage($failMessage = uniqid()); })
 						->isInstanceOf('mageekguy\atoum\asserter\exception')
 						->hasMessage($failMessage)
 
 				->if($this->calling($controller)->getCallsNumber = rand(1, PHP_INT_MAX))
 				->then
-					->object($asserter->hasReceivedMessages())->isIdenticalTo($asserter)
-					->object($asserter->hasReceivedMessages)->isIdenticalTo($asserter)
+					->object($asserter->hasReceivedSomeMessage())->isIdenticalTo($asserter)
+					->object($asserter->hasReceivedSomeMessage)->isIdenticalTo($asserter)
 		;
 	}
 

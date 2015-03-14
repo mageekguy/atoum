@@ -15,7 +15,7 @@ class mock extends adapter
 	{
 		switch (strtolower($property))
 		{
-			case 'hasreceivedmessages':
+			case 'hasreceivedsomemessage':
 			case 'didnotreceiveanymessage':
 				return $this->{$property}();
 
@@ -45,7 +45,7 @@ class mock extends adapter
 		return $this->call($function);
 	}
 
-	public function hasReceivedMessages($failMessage = null)
+	public function hasReceivedSomeMessage($failMessage = null)
 	{
 		if ($this->adapterIsSet()->adapter->getCallsNumber() > 0)
 		{
